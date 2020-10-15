@@ -19,7 +19,7 @@ public class AgendamentoEmailDao {
 	}
 
 	public List<AgendamentoEmail> listar() {
-		return entityManager.createQuery("select ae from AgendamentoEmail ae", AgendamentoEmail.class).getResultList();
+		return entityManager.createQuery("SELECT ae FROM AgendamentoEmail ae", AgendamentoEmail.class).getResultList();
 	}
 
 	public void inserir(AgendamentoEmail agendamentoEmail) {

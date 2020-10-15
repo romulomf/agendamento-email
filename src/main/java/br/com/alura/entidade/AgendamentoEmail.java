@@ -1,5 +1,6 @@
 package br.com.alura.entidade;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,14 +13,19 @@ public class AgendamentoEmail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
+	@Column(name = "email", nullable = false)
 	private String email;
 
+	@Column(name = "assunto", nullable = false)
 	private String assunto;
 
+	@Column(name = "mensagem", nullable = false)
 	private String mensagem;
 
+	@Column(name = "agendado", nullable = false)
 	private Boolean agendado;
 
 	public AgendamentoEmail() {
