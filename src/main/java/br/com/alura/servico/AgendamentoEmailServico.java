@@ -1,18 +1,17 @@
 package br.com.alura.servico;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.alura.dao.AgendamentoEmailDao;
 import br.com.alura.entidade.AgendamentoEmail;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Stateless
 public class AgendamentoEmailServico {
-
-	private static final Logger LOOGER = Logger.getLogger(AgendamentoEmail.class.getName());
 
 	@Inject
 	private AgendamentoEmailDao dao;
@@ -42,9 +41,9 @@ public class AgendamentoEmailServico {
 	public void enviar(AgendamentoEmail agendamentoEmail) {
 		try {			
 			Thread.sleep(5000);
-			LOOGER.info(String.format("O e-mail do(a) usuário(a) %s foi enviado!", agendamentoEmail.getEmail()));
+			log.info(String.format("O e-mail do(a) usuário(a) %s foi enviado!", agendamentoEmail.getEmail()));
 		} catch (InterruptedException e) {
-			LOOGER.warning(e.getMessage());
+			log.error(e.getMessage(), e);
 		}
 	}
 }

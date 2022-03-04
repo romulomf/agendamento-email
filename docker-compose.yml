@@ -1,0 +1,35 @@
+version: '3.9'
+networks:
+  agendamento-email-network:
+    name: agendamento-network
+    driver: bridge
+services:
+  database:
+    image: mariadb:focal
+    container_name: agendamento-database
+    hostname: agendamento-database
+    networks:
+      agendamento-network:
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+    healthcheck:
+      test: ["CMD", "mariadb", "--database=${DB_NAME}", "--user=${DB_USER}", "--password=${DB_PASS}", "--port=${DB_PORT}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    ports:
+      - 3306:3306
+    restart: "no"
+  appserver:
+    image: quay.io/wildfly/wildfly:26.0.1.Final
+    container_name: agendamento-appserver
+    hostname: agendamento-appserver
+    networks:
+      agendamento-network:
+    depends_on:
+      - database
+    restart: "no"

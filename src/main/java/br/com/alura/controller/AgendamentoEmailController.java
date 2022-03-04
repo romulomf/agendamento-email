@@ -12,16 +12,14 @@ import javax.ws.rs.core.Response.Status;
 
 import br.com.alura.entidade.AgendamentoEmail;
 import br.com.alura.servico.AgendamentoEmailServico;
+import lombok.NoArgsConstructor;
 
 @Path("emails")
+@NoArgsConstructor
 public class AgendamentoEmailController {
 
 	@Inject
 	private AgendamentoEmailServico agendamentoEmailServico;
-
-	public AgendamentoEmailController() {
-		// construtor padrão
-	}
 
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)

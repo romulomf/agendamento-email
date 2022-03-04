@@ -7,16 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.alura.entidade.AgendamentoEmail;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Stateless
 public class AgendamentoEmailDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
-	public AgendamentoEmailDao() {
-		// construtor padrão
-	}
 
 	public List<AgendamentoEmail> listar() {
 		return entityManager.createQuery("SELECT ae FROM AgendamentoEmail ae", AgendamentoEmail.class).getResultList();
