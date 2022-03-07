@@ -9,19 +9,19 @@ import javax.jms.MessageListener;
 
 import br.com.alura.entidade.AgendamentoEmail;
 import br.com.alura.servico.AgendamentoEmailServico;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@NoArgsConstructor
 @MessageDriven(activationConfig = {
-		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:/jms/queue/EmailQueue"),
-		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
+	@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:/jms/queue/EmailQueue"),
+	@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class AgendamentoEmailMdb implements MessageListener {
 
 	@Inject
 	private AgendamentoEmailServico agendamentoEmailServico;
-	
-	public AgendamentoEmailMdb() {
-		// construtor padrão
-	}
 
 	@Override
 	public void onMessage(Message message) {
@@ -29,7 +29,7 @@ public class AgendamentoEmailMdb implements MessageListener {
 			AgendamentoEmail agendamentoEmail = message.getBody(AgendamentoEmail.class);
 			agendamentoEmailServico.enviar(agendamentoEmail);
 		} catch (JMSException e) {
-			throw new RuntimeException(e);
+			log.error(e.getMessage(), e);
 		}
 	}
 }

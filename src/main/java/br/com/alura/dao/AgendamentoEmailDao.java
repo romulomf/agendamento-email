@@ -9,8 +9,8 @@ import javax.persistence.PersistenceContext;
 import br.com.alura.entidade.AgendamentoEmail;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Stateless
+@NoArgsConstructor
 public class AgendamentoEmailDao {
 
 	@PersistenceContext

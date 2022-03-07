@@ -12,8 +12,10 @@ import javax.jms.Queue;
 
 import br.com.alura.entidade.AgendamentoEmail;
 import br.com.alura.servico.AgendamentoEmailServico;
+import lombok.NoArgsConstructor;
 
 @Singleton
+@NoArgsConstructor
 public class AgendamentoEmailTarefa {
 
 	@Inject
@@ -25,10 +27,6 @@ public class AgendamentoEmailTarefa {
 
 	@Resource(mappedName = "java:/jms/queue/EmailQueue")
 	private Queue queue;
-
-	public AgendamentoEmailTarefa() {
-		// construtor padrão
-	}
 
 	@Schedule(hour = "*", minute = "*", second = "*/10")
 	public void enviar() {

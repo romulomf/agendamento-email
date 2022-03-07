@@ -1,6 +1,6 @@
 version: '3.9'
 networks:
-  agendamento-email-network:
+  agendamento-network:
     name: agendamento-network
     driver: bridge
 services:
@@ -10,6 +10,7 @@ services:
     hostname: agendamento-database
     networks:
       agendamento-network:
+    env_file: .env
     environment:
       - MARIADB_ROOT_PASSWORD=${DB_ROOT}
       - MARIADB_DATABASE=${DB_NAME}
@@ -24,12 +25,12 @@ services:
     ports:
       - 3306:3306
     restart: "no"
-  appserver:
-    image: quay.io/wildfly/wildfly:26.0.1.Final
-    container_name: agendamento-appserver
-    hostname: agendamento-appserver
-    networks:
-      agendamento-network:
-    depends_on:
-      - database
-    restart: "no"
+#  appserver:
+#    image: quay.io/wildfly/wildfly:26.0.1.Final
+#    container_name: agendamento-appserver
+#    hostname: agendamento-appserver
+#    networks:
+#      agendamento-network:
+#    depends_on:
+#      - database
+#    restart: "no"

@@ -7,18 +7,16 @@ import javax.inject.Inject;
 
 import br.com.alura.dao.AgendamentoEmailDao;
 import br.com.alura.entidade.AgendamentoEmail;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Stateless
+@NoArgsConstructor
 public class AgendamentoEmailServico {
 
 	@Inject
 	private AgendamentoEmailDao dao;
-
-	public AgendamentoEmailServico() {
-		// construtor padrão
-	}
 
 	public List<AgendamentoEmail> listar() {
 		return dao.listar();
