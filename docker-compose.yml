@@ -5,7 +5,7 @@ networks:
     driver: bridge
 services:
   database:
-    image: mariadb:focal
+    image: mariadb:latest
     container_name: agendamento-database
     hostname: agendamento-database
     networks:
@@ -25,12 +25,33 @@ services:
     ports:
       - 3306:3306
     restart: "no"
-#  appserver:
-#    image: quay.io/wildfly/wildfly:26.0.1.Final
-#    container_name: agendamento-appserver
-#    hostname: agendamento-appserver
-#    networks:
-#      agendamento-network:
-#    depends_on:
-#      - database
-#    restart: "no"
+  appserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agendamento-email:${TAG}
+    command: ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-bunsecure", "0.0.0.0", "-c", "standalone-full.xml", "--debug"]
+    container_name: agendamento-appserver
+    hostname: agendamento-appserver
+    networks:
+      agendamento-network:
+    env_file: .env
+    environment:
+      - DEBUG_MODE=${DEBUG_MODE}
+      - DEBUG_PORT=${DEBUG_PORT}
+    depends_on:
+      - database
+    healthcheck:
+      test: ["CMD", "/opt/jboss/wildfly/bin/jboss-cli.sh", "-c", ":read-attribute(name=server-state)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    ports:
+#      - 3528:3528
+      - 8080:8080
+#      - 8443:8443
+      - 8787:8787
+      - 9990:9990
+#      - 9993:9993
+    restart: "no"
