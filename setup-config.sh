@@ -25,21 +25,21 @@ function mariadb_module() {
 	# Módulo do MariaDB
 	local MARIADB_MODULE_DIRECTORY=$WILDFLY_HOME/modules/org/mariadb/main
 
-	if [[ -f $MARIADB_MODULE_DIRECTORY/mariadb-java-client-3.0.7.jar ]]; then
+	if [[ -f $MARIADB_MODULE_DIRECTORY/mariadb-java-client-3.0.9.jar ]]; then
 		echo "MariaDB module already installed"
 		return;
 	fi
 
-	if [[ ! -f /opt/jboss/mariadb-java-client-3.0.7.jar  ]]; then
+	if [[ ! -f /opt/jboss/mariadb-java-client-3.0.9.jar  ]]; then
 		echo "MariaDB module not found"
 		echo "Downloading MariaDB module library ..."
 		# Faz o download do driver do mariadb para o diretório atual
-		curl https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.0.7/mariadb-java-client-3.0.7.jar -o mariadb-java-client-3.0.7.jar
+		curl https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.0.9/mariadb-java-client-3.0.9.jar -o mariadb-java-client-3.0.9.jar
 	fi
 
 	echo "Adding MariaDB module ..."
 	# Adiciona o driver do mariadb à configuração de drivers do servidor de aplicação widlfly
-	$WILDFLY_CLI -c "module add --allow-nonexistent-resources --name=org.mariadb --resources=/opt/jboss/mariadb-java-client-3.0.7.jar --dependencies=javax.api,javax.transaction.api"
+	$WILDFLY_CLI -c "module add --allow-nonexistent-resources --name=org.mariadb --resources=/opt/jboss/mariadb-java-client-3.0.9.jar --dependencies=javax.api,javax.transaction.api"
 	echo "MariaDB module added"
 
 	sleep 1
