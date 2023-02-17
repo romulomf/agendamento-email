@@ -25,21 +25,23 @@ function mariadb_module() {
 	# Módulo do MariaDB
 	local MARIADB_MODULE_DIRECTORY=$WILDFLY_HOME/modules/org/mariadb/main
 
-	if [[ -f $MARIADB_MODULE_DIRECTORY/mariadb-java-client-3.0.9.jar ]]; then
-		echo "MariaDB module already installed"
+	local readonly MARIADB_DRIVER_VERSION='3.1.2';
+
+	if [[ -f $MARIADB_MODULE_DIRECTORY/mariadb-java-client-$MARIADB_DRIVER_VERSION.jar ]]; then
+		echo "MariaDB module v$MARIADB_DRIVER_VERSION already installed"
 		return;
 	fi
 
-	if [[ ! -f /opt/jboss/mariadb-java-client-3.0.9.jar  ]]; then
+	if [[ ! -f /opt/jboss/mariadb-java-client-$MARIADB_DRIVER_VERSION.jar  ]]; then
 		echo "MariaDB module not found"
-		echo "Downloading MariaDB module library ..."
+		echo "Downloading v$MARIADB_DRIVER_VERSION of MariaDB module library ..."
 		# Faz o download do driver do mariadb para o diretório atual
-		curl https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.0.9/mariadb-java-client-3.0.9.jar -o mariadb-java-client-3.0.9.jar
+		curl https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/$MARIADB_DRIVER_VERSION/mariadb-java-client-$MARIADB_DRIVER_VERSION.jar -o mariadb-java-client-$MARIADB_DRIVER_VERSION.jar
 	fi
 
 	echo "Adding MariaDB module ..."
 	# Adiciona o driver do mariadb à configuração de drivers do servidor de aplicação widlfly
-	$WILDFLY_CLI -c "module add --allow-nonexistent-resources --name=org.mariadb --resources=/opt/jboss/mariadb-java-client-3.0.9.jar --dependencies=javax.api,javax.transaction.api"
+	$WILDFLY_CLI -c "module add --allow-nonexistent-resources --name=org.mariadb --resources=/opt/jboss/mariadb-java-client-$MARIADB_DRIVER_VERSION.jar --dependencies=javax.api,javax.transaction.api"
 	echo "MariaDB module added"
 
 	sleep 1
@@ -82,10 +84,13 @@ function jms_queue() {
 
 jms_queue
 
-if [[ $ENVIRONMENT = 'development' ]]; then
-	echo "Setting Weld to Development Mode"
-	$WILDFLY_CLI -c "/subsystem=weld:write-attribute(name=development-mode,value=true)" &> /dev/null
-fi
+# O modo de desenvolvimento do weld está depreciado
+
+#if [[ $ENVIRONMENT = 'development' ]]; then
+#	echo "Setting Weld to Development Mode"
+#	$WILDFLY_CLI -c "/subsystem=weld:write-attribute(name=development-mode,value=true)" &> /dev/null
+#	echo "Weld is set to operate in development mode"
+#fi
 
 echo "Shuting down wildfly ..."
 

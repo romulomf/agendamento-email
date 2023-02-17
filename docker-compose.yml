@@ -23,7 +23,7 @@ services:
       retries: 3
       start_period: 10s
     ports:
-      - 3306:3306
+      - "3306:3306"
     restart: "no"
   appserver:
     build:
@@ -48,10 +48,12 @@ services:
       retries: 3
       start_period: 10s
     ports:
-#      - 3528:3528
-      - 8080:8080
-#      - 8443:8443
-      - 8787:8787
-      - 9990:9990
-#      - 9993:9993
+      - "3528:3528"
+      - "8080:8080"
+      - "8443:8443"
+      - "8787:8787"
+      - "9990:9990"
+      - "9993:9993"
     restart: "no"
+    volumes:
+       - ./appdeploy:/opt/jboss/wildfly/standalone/deployments:rw

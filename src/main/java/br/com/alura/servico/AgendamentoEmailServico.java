@@ -2,11 +2,10 @@ package br.com.alura.servico;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import br.com.alura.dao.AgendamentoEmailDao;
 import br.com.alura.entidade.AgendamentoEmail;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

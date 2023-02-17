@@ -1,10 +1,13 @@
-FROM quay.io/wildfly/wildfly:26.1.2 AS agendamento-email
+FROM quay.io/wildfly/wildfly:27.0.1.Final-jdk11 AS agendamento-email
 
 # Indica quem é o responsável pela manutenção da imagem
 LABEL MAINTAINER="Rômulo Machado Flores"
 
 # Expõe portas que podem ser mapeadas pelo host
 EXPOSE 3528 3529 8080 8443 8787 9990 9993
+
+# Define o usuário utilizado para as operações
+USER root:root
 
 # Cria e habilita um usuário para administrar o servidor
 RUN /opt/jboss/wildfly/bin/add-user.sh -u agendamento-email -p 123456 -s -e
