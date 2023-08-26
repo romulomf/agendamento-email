@@ -55,5 +55,3 @@ services:
       - "9990:9990"
       - "9993:9993"
     restart: "no"
-    volumes:
-       - ./appdeploy:/opt/jboss/wildfly/standalone/deployments:rw
