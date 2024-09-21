@@ -1,4 +1,4 @@
-FROM quay.io/wildfly/wildfly:27.0.1.Final-jdk11 AS agendamento-email
+FROM quay.io/wildfly/wildfly:33.0.0.Final-2-jdk21 AS agendamento-email
 
 # Indica quem é o responsável pela manutenção da imagem
 LABEL MAINTAINER="Rômulo Machado Flores"
