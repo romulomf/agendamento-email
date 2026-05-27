@@ -6,16 +6,18 @@ import br.com.alura.dao.AgendamentoEmailDao;
 import br.com.alura.entidade.AgendamentoEmail;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Stateless
-@NoArgsConstructor
 public class AgendamentoEmailServico {
 
+	private final AgendamentoEmailDao dao;
+
 	@Inject
-	private AgendamentoEmailDao dao;
+	public AgendamentoEmailServico(AgendamentoEmailDao dao) {
+		this.dao = dao;
+	}
 
 	public List<AgendamentoEmail> listar() {
 		return dao.listar();

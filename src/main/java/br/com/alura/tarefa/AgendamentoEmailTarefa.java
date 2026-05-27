@@ -11,21 +11,22 @@ import jakarta.inject.Inject;
 import jakarta.jms.JMSConnectionFactory;
 import jakarta.jms.JMSContext;
 import jakarta.jms.Queue;
-import lombok.NoArgsConstructor;
 
 @Singleton
-@NoArgsConstructor
 public class AgendamentoEmailTarefa {
 
-	@Inject
-	private AgendamentoEmailServico agendamentoEmailServico;
+	private final AgendamentoEmailServico agendamentoEmailServico;
 
-	@Inject
-	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
-	private JMSContext context;
+	private final JMSContext context;
 
 	@Resource(mappedName = "java:/jms/queue/EmailQueue")
 	private Queue queue;
+
+	@Inject
+	public AgendamentoEmailTarefa(@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory") JMSContext context, AgendamentoEmailServico agendamentoEmailServico) {
+		this.context = context;
+		this.agendamentoEmailServico = agendamentoEmailServico;
+	}
 
 	@Schedule(hour = "*", minute = "*", second = "*/10")
 	public void enviar() {

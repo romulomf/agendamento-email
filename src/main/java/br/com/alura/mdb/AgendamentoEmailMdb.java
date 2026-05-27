@@ -8,19 +8,21 @@ import jakarta.inject.Inject;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageListener;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@NoArgsConstructor
 @MessageDriven(activationConfig = {
 	@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:/jms/queue/EmailQueue"),
 	@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class AgendamentoEmailMdb implements MessageListener {
 
+	private final AgendamentoEmailServico agendamentoEmailServico;
+
 	@Inject
-	private AgendamentoEmailServico agendamentoEmailServico;
+	public AgendamentoEmailMdb(AgendamentoEmailServico agendamentoEmailServico) {
+		this.agendamentoEmailServico = agendamentoEmailServico;
+	}
 
 	@Override
 	public void onMessage(Message message) {
