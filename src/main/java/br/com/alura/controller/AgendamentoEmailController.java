@@ -2,6 +2,7 @@ package br.com.alura.controller;
 
 import br.com.alura.entidade.AgendamentoEmail;
 import br.com.alura.servico.AgendamentoEmailServico;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -16,6 +17,7 @@ public class AgendamentoEmailController {
 
 	private final AgendamentoEmailServico agendamentoEmailServico;
 
+	@Inject
 	public AgendamentoEmailController(AgendamentoEmailServico agendamentoEmailServico) {
 		this.agendamentoEmailServico = agendamentoEmailServico;
 	}
