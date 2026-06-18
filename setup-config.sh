@@ -8,14 +8,14 @@ WILDFLY_CLI=$WILDFLY_HOME/bin/jboss-cli.sh
 # $WILDFLY_HOME/bin/add-user.sh -u agendamento-email -p 123456 -s -e
 
 function wait_for_server() {
-	until $($WILDFLY_CLI -c ":read-attribute(name=server-state)" &> /dev/null); do
+	until $WILDFLY_CLI -c ":read-attribute(name=server-state)" &> /dev/null; do
 		echo "Trying to connect to server ..."
 		sleep 1
 	done
 }
 
 echo "Starting application server"
-$WILDFLY_HOME/bin/$WILDFLY_MODE.sh --start-mode=admin-only -c standalone-full.xml > /dev/null &
+"$WILDFLY_HOME/bin/$WILDFLY_MODE.sh" --start-mode=admin-only -c standalone-full.xml > /dev/null &
 
 echo "Waiting server to be ready to accept connections and execute commands"
 wait_for_server
@@ -25,7 +25,7 @@ function mariadb_module() {
 	# Módulo do MariaDB
 	local MARIADB_MODULE_DIRECTORY=$WILDFLY_HOME/modules/org/mariadb/main
 
-	local readonly MARIADB_DRIVER_VERSION='3.1.2';
+	local MARIADB_DRIVER_VERSION='3.5.8';
 
 	if [[ -f $MARIADB_MODULE_DIRECTORY/mariadb-java-client-$MARIADB_DRIVER_VERSION.jar ]]; then
 		echo "MariaDB module v$MARIADB_DRIVER_VERSION already installed"
@@ -92,7 +92,7 @@ jms_queue
 #	echo "Weld is set to operate in development mode"
 #fi
 
-echo "Shuting down wildfly ..."
+echo "Shutting down wildfly ..."
 
 if	[ "$WILDFLY_MODE" = 'standalone' ]; then
 	$WILDFLY_CLI -c ":shutdown" &> /dev/null

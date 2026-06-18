@@ -1,5 +1,6 @@
 package br.com.alura.entidade;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import lombok.Data;
 @Data
 public class AgendamentoEmail implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 2306066603540510413L;
 
 	@Id
